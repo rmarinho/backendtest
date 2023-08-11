@@ -3,6 +3,7 @@ using Microsoft.Maui;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Handlers;
+using Window = System.Windows.Window;
 
 namespace Microsoft.Maui.Handlers.WPF
 {

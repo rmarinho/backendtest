@@ -14,6 +14,7 @@ namespace Microsoft.Maui.Handlers.WPF
         public static MauiAppBuilder UseMauiAppWPF<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TApp>(this MauiAppBuilder builder)
             where TApp : class, IApplication
         {
+            builder.UseMauiApp<TApp>();
             builder.SetupDefaults();
             return builder;
         }
@@ -21,14 +22,15 @@ namespace Microsoft.Maui.Handlers.WPF
         public static MauiAppBuilder UseMauiAppWPF<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TApp>(this MauiAppBuilder builder, Func<IServiceProvider, TApp> implementationFactory)
             where TApp : class, IApplication
         {
+            builder.UseMauiApp<TApp>();
             builder.SetupDefaults();
             return builder;
         }
 
         static IMauiHandlersCollection AddMauiControlsHandlers(this IMauiHandlersCollection handlersCollection)
         {
-            handlersCollection.AddHandler<Microsoft.Maui.IApplication, ApplicationHandler>();
-            handlersCollection.AddHandler<Microsoft.Maui.IWindow, WindowHandler>();
+            handlersCollection.AddHandler<Microsoft.Maui.Controls.Application, Microsoft.Maui.Handlers.WPF.ApplicationHandler>();
+            handlersCollection.AddHandler<Microsoft.Maui.Controls.Window, Microsoft.Maui.Handlers.WPF.WindowHandler>();
             //handlersCollection.AddHandler<Label, LabelHandler>();
             //handlersCollection.AddHandler<ContentPage, PageHandler>();
             //handlersCollection.AddHandler<Layout, LayoutHandler>();

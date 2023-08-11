@@ -36,7 +36,6 @@ namespace WpfApp1
         protected override MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder()
-                        .UseMauiApp<TheApp>()
                         .UseMauiAppWPF<TheApp>();
             return builder.Build();
         }

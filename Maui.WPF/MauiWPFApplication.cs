@@ -6,7 +6,7 @@ using Microsoft.Maui.Hosting;
 
 namespace Microsoft.Maui.Handlers.WPF
 {
-    public abstract class MauiWPFApplication : Application, IPlatformApplication
+    public abstract class MauiWPFApplication : System.Windows.Application, IPlatformApplication
     {
 
         public MauiWPFApplication()
@@ -17,27 +17,11 @@ namespace Microsoft.Maui.Handlers.WPF
 
         private void OnClosing(object sender, ExitEventArgs e)
         {
-            
+
         }
 
         private void OnLaunching(object sender, StartupEventArgs e)
         {
-            OnActivated(e);
-        }
-
-        public IServiceProvider Services { get; protected set; } = null!;
-
-        public IApplication Application { get; protected set; } = null!;
-
-        public static new MauiWPFApplication? Current =>  System.Windows.Application.Current as MauiWPFApplication;
-
-
-        protected abstract MauiApp CreateMauiApp();
-
-
-        protected override void OnActivated(EventArgs args)
-        {
-
             IPlatformApplication.Current = this;
             var mauiApp = CreateMauiApp();
 
@@ -47,16 +31,32 @@ namespace Microsoft.Maui.Handlers.WPF
 
             Services = applicationContext.Services;
 
-         //   Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunching>(del => del(this, args));
+            //   Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunching>(del => del(this, args));
 
             Application = Services.GetRequiredService<IApplication>();
 
-              this.SetApplicationHandler(Application, applicationContext);
+            this.SetApplicationHandler(Application, applicationContext);
 
-            ApplicationExtensions.CreatePlatformWindow(this,Application, args);
+            ApplicationExtensions.CreatePlatformWindow(this, Application, e);
 
-      //      Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunched>(del => del(this, args));
+            //      Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunched>(del => del(this, args));
         }
+
+        public IServiceProvider Services { get; protected set; } = null!;
+
+        public IApplication Application { get; protected set; } = null!;
+
+        public static new MauiWPFApplication? Current => System.Windows.Application.Current as MauiWPFApplication;
+
+
+        protected abstract MauiApp CreateMauiApp();
+
+
+        //protected override void OnActivated(EventArgs args)
+        //{
+
+          
+        //}
 
     }
 }
