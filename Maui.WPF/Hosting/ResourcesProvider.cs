@@ -1,44 +1,14 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Microsoft.Maui.Controls.Internals;
-using Microsoft.Maui.Platform;
 
 namespace Microsoft.Maui.Handlers.WPF
 {
-    public static class ApplicationExtensions
-    {
-        public static void CreatePlatformWindow(this Application platformApplication, IApplication application, StartupEventArgs? args) =>
-            platformApplication.CreatePlatformWindow(application, new OpenWindowRequest(new WPFPersistedState(args)));
-
-        public static void CreatePlatformWindow(this Application platformApplication, IApplication application, OpenWindowRequest? args)
-        {
-            if (application.Handler?.MauiContext is not IMauiContext applicationContext)
-                return;
-
-            var winuiWindow = new MauiWPFWindow();
-
-            var mauiContext = applicationContext!.MakeWindowScope(winuiWindow, out var windowScope);
-
-         //   applicationContext.Services.InvokeLifecycleEvents<WindowsLifecycle.OnMauiContextCreated>(del => del(mauiContext));
-
-            var activationState = args?.State is not null
-                ? new ActivationState(mauiContext, args.State)
-                : new ActivationState(mauiContext);
-
-            var window = application.CreateWindow(activationState);
-
-            winuiWindow.SetWindowHandler(window, mauiContext);
-
-           // applicationContext.Services.InvokeLifecycleEvents<WindowsLifecycle.OnWindowCreated>(del => del(winuiWindow));
-            winuiWindow.SetWindow(window);
-            winuiWindow.Show();
-        }
-    }
-
 #pragma warning disable CS0612 // Type or member is obsolete
     internal class ResourcesProvider : ISystemResourcesProvider
 #pragma warning restore CS0612 // Type or member is obsolete

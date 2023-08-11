@@ -29,8 +29,12 @@ namespace Microsoft.Maui.Handlers.WPF
 
         static IMauiHandlersCollection AddMauiControlsHandlers(this IMauiHandlersCollection handlersCollection)
         {
-            handlersCollection.AddHandler<Microsoft.Maui.Controls.Application, Microsoft.Maui.Handlers.WPF.ApplicationHandler>();
-            handlersCollection.AddHandler<Microsoft.Maui.Controls.Window, Microsoft.Maui.Handlers.WPF.WindowHandler>();
+            handlersCollection.AddHandler<Microsoft.Maui.Controls.Application, ApplicationHandler>();
+            handlersCollection.AddHandler<Microsoft.Maui.Controls.Window, WindowHandler>();
+            handlersCollection.AddHandler<ContentPage, PageHandler>();
+            handlersCollection.AddHandler<Layout, LayoutHandler>();
+            handlersCollection.AddHandler<Label, LabelHandler>();
+           
             //handlersCollection.AddHandler<Label, LabelHandler>();
             //handlersCollection.AddHandler<ContentPage, PageHandler>();
             //handlersCollection.AddHandler<Layout, LayoutHandler>();
@@ -44,7 +48,7 @@ namespace Microsoft.Maui.Handlers.WPF
 
 
 #pragma warning disable CS0612, CA1416 // Type or member is obsolete, 'ResourcesProvider' is unsupported on: 'iOS' 14.0 and later
-         //   DependencyService.Register<Platform.WPF.ResourcesProvider>();
+           DependencyService.Register<ResourcesProvider>();
 
 
             //DependencyService.Register<PlatformSizeService>();

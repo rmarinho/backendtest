@@ -20,26 +20,32 @@ namespace Microsoft.Maui.Handlers.WPF
 
         }
 
-        private void OnLaunching(object sender, StartupEventArgs e)
+        private void OnLaunching(object sender, StartupEventArgs args)
         {
+            // Windows running on a different thread will "launch" the app again
+            //if (Application != null)
+            //{
+            //	Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunching>(del => del(this, args));
+            //	Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunched>(del => del(this, args));
+            //	return;
+            //}
+
             IPlatformApplication.Current = this;
             var mauiApp = CreateMauiApp();
 
-            var rootContext = new MauiContext(mauiApp.Services);
+            var rootContext = new WPFMauiContext(mauiApp.Services);
 
             var applicationContext = rootContext.MakeApplicationScope(this);
 
             Services = applicationContext.Services;
 
-            //   Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunching>(del => del(this, args));
+            //Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunching>(del => del(this, args));
 
             Application = Services.GetRequiredService<IApplication>();
 
             this.SetApplicationHandler(Application, applicationContext);
 
-            ApplicationExtensions.CreatePlatformWindow(this, Application, e);
-
-            //      Services.InvokeLifecycleEvents<WindowsLifecycle.OnLaunched>(del => del(this, args));
+            this.CreatePlatformWindow(Application, args);
         }
 
         public IServiceProvider Services { get; protected set; } = null!;
